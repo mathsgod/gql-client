@@ -7,9 +7,12 @@ class Client
     private $_options = ["pretty" => true];
     const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
 
-    public function __construct($endpoint)
+    public function __construct($endpoint, $options)
     {
         $this->_endpoint = $endpoint;
+        if (is_array($options)) {
+            $this->_options = array_merge($this->_options, $options);
+        }
     }
 
     public function query($query)
@@ -40,7 +43,7 @@ class Client
         return str_repeat(" ", $level * 4 + 1);
     }
 
-    private function objToQuery($obj)
+    public function objToQuery($obj)
     {
         $queryLines = [];
         $this->convertQuery($obj, 0, $queryLines);
