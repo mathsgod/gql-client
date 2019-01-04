@@ -1,0 +1,19 @@
+{
+    "name": "mathsgod/gql-client",
+    "description": "gql client",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Raymond",
+            "email": "raymond@hostlink.com.hk"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "GQL\\":"src/"
+        }
+    }
+}
