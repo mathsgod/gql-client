@@ -1,6 +1,6 @@
 {
     "name": "mathsgod/gql-client",
-    "description": "gql client",
+    "description": "gql client for php",
     "type": "library",
     "authors": [
         {
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "GQL\\":"src/"
+            "GQL\\": "src/"
         }
     }
 }
