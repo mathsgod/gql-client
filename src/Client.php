@@ -72,7 +72,7 @@ class Client
     {
         $http = new \GuzzleHttp\Client();
         try {
-            $resp = $http->request("GET", $this->_endpoint, [
+            $resp = $http->request("POST", $this->_endpoint, [
                 "headers" => [
                     "Accept" => "application/json"
                 ],
