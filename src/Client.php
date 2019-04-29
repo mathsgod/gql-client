@@ -5,6 +5,9 @@ class Client
 {
     private $_endpoint;
     private $_options = ["pretty" => true];
+    public $headers = ["Accept" => "application/json"];
+    public $auth = [];
+
     const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
 
     public function __construct($endpoint, $options)
@@ -22,13 +25,11 @@ class Client
         return $this->request($gql);
     }
 
-
     public function subscription($query)
     {
         $q["subscription"] = $query;
         $gql = $this->objToQuery($q);
         return $this->request($gql);
-
     }
 
     public function mutation($query)
@@ -73,9 +74,8 @@ class Client
         $http = new \GuzzleHttp\Client();
         try {
             $resp = $http->request("POST", $this->_endpoint, [
-                "headers" => [
-                    "Accept" => "application/json"
-                ],
+                "auth" => $this->auth,
+                "headers" => $this->headers,
                 "json" => [
                     "query" => $query
                 ]
@@ -91,7 +91,7 @@ class Client
         return !in_array($fieldName, self::CONFIG_FIELDS);
     }
 
-    private function convertQuery($node, $level, &$output, $options)
+    private function convertQuery($node, $level, &$output)
     {
         foreach ($node as $key => $value) {
             if (!$this->filterNonConfigFields($key)) {
@@ -116,7 +116,7 @@ class Client
                     $argsStr = "(" . $this->buildArgs($value["__args"]) . ")";
 
 
-           //         $spacer = $argsExist ? ' ' : '';
+                    //         $spacer = $argsExist ? ' ' : '';
                     $spacer = "";
                     $token = $token . " " . $spacer . ($argsStr ? $argsStr : '');
                 }
@@ -157,5 +157,4 @@ class Client
         $props = implode(", ", $props);
         return "{" . $props . "}";
     }
-
 }

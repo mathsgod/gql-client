@@ -11,3 +11,18 @@ $data = $client->query([
     ]
 ]);
 ```
+
+## auth
+```php
+$client = new GQL\Client($server_address);
+
+$client->auth=["username","password"];
+
+$data = $client->query([
+    "me" => [
+        "first_name" => true,
+        "last_name" => true
+    ]
+]);
+```
+
