@@ -1,6 +1,8 @@
 <?
 namespace GQL;
 
+use function GuzzleHttp\json_encode;
+
 class Client
 {
     private $_endpoint;
@@ -145,16 +147,26 @@ class Client
 
     private function stringify($obj_from_json)
     {
-
-        if (!is_object($obj_from_json) || $obj_from_json === null) {
-            return json_encode($obj_from_json);
+        if (!is_array($obj_from_json)) {
+            if (!is_object($obj_from_json) || $obj_from_json === null) {
+                return json_encode($obj_from_json);
+            }
         }
-
         $keys = array_keys($obj_from_json);
-        $props = array_map(function ($key) use ($obj_from_json) {
-            return $key . ": " . $this->stringify($obj_from_json[$key]);
-        }, $keys);
-        $props = implode(", ", $props);
-        return "{" . $props . "}";
+
+        if ($keys[0] === 0) {
+            $props = array_map(function ($key) use ($obj_from_json) {
+                return  $this->stringify($obj_from_json[$key]);
+            }, $keys);
+
+            $props = implode(", ", $props);
+            return "[" . $props . "]";
+        } else {
+            $props = array_map(function ($key) use ($obj_from_json) {
+                return $key . ": " . $this->stringify($obj_from_json[$key]);
+            }, $keys);
+            $props = implode(", ", $props);
+            return "{" . $props . "}";
+        }
     }
 }
