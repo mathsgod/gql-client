@@ -1,4 +1,5 @@
 <?
+
 namespace GQL;
 
 use function GuzzleHttp\json_encode;
@@ -12,7 +13,7 @@ class Client
 
     const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
 
-    public function __construct($endpoint, $options)
+    public function __construct($endpoint, $options = [])
     {
         $this->_endpoint = $endpoint;
         if (is_array($options)) {
