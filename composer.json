@@ -1,20 +1,21 @@
 {
     "name": "mathsgod/gql-client",
-    "description": "gql client for php",
+    "description": "A simple GraphQL client tools for php",
     "type": "library",
     "authors": [
         {
-            "name": "Raymond",
-            "email": "raymond@hostlink.com.hk"
+            "name": "Raymond Chong",
+            "email": "mathsgod@yahoo.com"
         }
     ],
     "require": {
-        "php":">=5.6",
+        "php": ">=5.6",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
         "psr-4": {
             "GQL\\": "src/"
         }
-    }
+    },
+    "license": "MIT"
 }
