@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace GQL;
 
@@ -10,44 +10,44 @@ class Client
     private $_options = ["pretty" => true];
     public $headers = ["Accept" => "application/json"];
     public $auth = [];
+    private $guzzle_client_config = [];
 
     const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
 
-    public function __construct($endpoint, $options = [])
+    public function __construct(string $endpoint, array $options = [], array $guzzle_client_config = [])
     {
         $this->_endpoint = $endpoint;
-        if (is_array($options)) {
-            $this->_options = array_merge($this->_options, $options);
-        }
+        $this->guzzle_client_config = array_merge($this->guzzle_client_config, $guzzle_client_config);
+        $this->_options = array_merge($this->_options, $options);
     }
 
-    public function query($query)
+    public function query(array $query)
     {
         $q["query"] = $query;
         $gql = $this->objToQuery($q);
         return $this->request($gql);
     }
 
-    public function subscription($query)
+    public function subscription(array $query)
     {
         $q["subscription"] = $query;
         $gql = $this->objToQuery($q);
         return $this->request($gql);
     }
 
-    public function mutation($query)
+    public function mutation(array $query)
     {
         $q["mutation"] = $query;
         $gql = $this->objToQuery($q);
         return $this->request($gql);
     }
 
-    private function getIndent($level)
+    private function getIndent(int $level)
     {
         return str_repeat(" ", $level * 4 + 1);
     }
 
-    public function objToQuery($obj)
+    public function objToQuery(array $obj): string
     {
         $queryLines = [];
         $this->convertQuery($obj, 0, $queryLines);
@@ -72,9 +72,9 @@ class Client
         return $output;
     }
 
-    public function request($query)
+    public function request(string $query): array
     {
-        $http = new \GuzzleHttp\Client();
+        $http = new \GuzzleHttp\Client($this->guzzle_client_config);
         try {
             $resp = $http->request("POST", $this->_endpoint, [
                 "auth" => $this->auth,
@@ -89,12 +89,12 @@ class Client
         return json_decode($resp->getBody()->getContents(), true);
     }
 
-    private function filterNonConfigFields($fieldName)
+    private function filterNonConfigFields(string $fieldName)
     {
         return !in_array($fieldName, self::CONFIG_FIELDS);
     }
 
-    private function convertQuery($node, $level, &$output)
+    private function convertQuery(array $node, int $level, array &$output)
     {
         foreach ($node as $key => $value) {
             if (!$this->filterNonConfigFields($key)) {
@@ -137,7 +137,7 @@ class Client
         }
     }
 
-    private function buildArgs($argsObj)
+    private function buildArgs(array $argsObj)
     {
         $args = [];
         foreach ($argsObj as $name => $value) {
