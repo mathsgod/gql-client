@@ -28,18 +28,18 @@ class Client
         return $this->request($gql);
     }
 
-    public function subscription(array $query)
+    public function subscription(array $query, array $multipart = [])
     {
         $q["subscription"] = $query;
         $gql = $this->objToQuery($q);
-        return $this->request($gql);
+        return $this->request($gql, $multipart);
     }
 
-    public function mutation(array $query)
+    public function mutation(array $query, array $multipart = [])
     {
         $q["mutation"] = $query;
         $gql = $this->objToQuery($q);
-        return $this->request($gql);
+        return $this->request($gql, $multipart);
     }
 
     private function getIndent(int $level)
@@ -72,17 +72,30 @@ class Client
         return $output;
     }
 
-    public function request(string $query): array
+    public function request(string $query, array $multipart = []): array
     {
         $http = new \GuzzleHttp\Client($this->guzzle_client_config);
         try {
-            $resp = $http->request("POST", $this->_endpoint, [
-                "auth" => $this->auth,
-                "headers" => $this->headers,
-                "json" => [
-                    "query" => $query
-                ]
-            ]);
+            if ($multipart) {
+                $m = $multipart;
+                $m[] = [
+                    "name" => "query",
+                    "contents" => $query
+                ];
+                $resp = $http->request("POST", $this->_endpoint, [
+                    "auth" => $this->auth,
+                    "headers" => $this->headers,
+                    "multipart" => $m
+                ]);
+            } else {
+                $resp = $http->request("POST", $this->_endpoint, [
+                    "auth" => $this->auth,
+                    "headers" => $this->headers,
+                    "json" => [
+                        "query" => $query
+                    ]
+                ]);
+            }
         } catch (\Exception $e) {
             return ["error" => ["message" => $e->getMessage()]];
         }
