@@ -7,6 +7,7 @@ class Builder
     public $name;
     public $selectors = [];
     public $args;
+    public $pretty = false;
     public function __construct(String $name, $args = null)
     {
         $this->name = $name;
@@ -95,6 +96,6 @@ class Builder
     {
         $obj = $this->toObject();
 
-        return Utils::ObjToQuery($obj);
+        return Utils::ObjToQuery($obj, $this->pretty);
     }
 }

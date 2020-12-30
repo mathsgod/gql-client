@@ -2,12 +2,9 @@
 
 namespace GQL;
 
-use function GuzzleHttp\json_encode;
-
 class Client
 {
     private $_endpoint;
-    private $_options = ["pretty" => true];
     public $headers = ["Accept" => "application/json"];
     public $auth = [];
     private $guzzle_client_config = [];
@@ -15,11 +12,10 @@ class Client
 
     const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
 
-    public function __construct(string $endpoint, array $options = [], array $guzzle_client_config = [])
+    public function __construct(string $endpoint, array $guzzle_client_config = [])
     {
         $this->_endpoint = $endpoint;
         $this->guzzle_client_config = array_merge($this->guzzle_client_config, $guzzle_client_config);
-        $this->_options = array_merge($this->_options, $options);
     }
 
     public function setToken(string $token)

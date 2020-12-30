@@ -4,7 +4,9 @@ namespace GQL;
 
 class Utils
 {
-    public static function ObjToQuery(array $obj): string
+    const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
+
+    public static function ObjToQuery(array $obj, bool $pretty = false): string
     {
         $self = new self();
 
@@ -16,7 +18,7 @@ class Utils
             $line = $a[0];
             $level = $a[1];
 
-            if ($self->_options["pretty"]) {
+            if ($pretty) {
                 if ($output) {
                     $output .= "\n";
                 }
@@ -35,9 +37,7 @@ class Utils
     {
         return str_repeat(" ", $level * 4 + 1);
     }
-
-
-    const CONFIG_FIELDS = ['__args', '__alias', '__aliasFor', '__variables', '__directives', '__on', '__typeName'];
+    
     private function filterNonConfigFields(string $fieldName)
     {
         return !in_array($fieldName, self::CONFIG_FIELDS);
@@ -85,7 +85,6 @@ class Utils
             }
         }
     }
-
 
     private function buildArgs(array $argsObj)
     {
