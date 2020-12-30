@@ -6,4 +6,11 @@ use GQL\Builder;
 
 require_once("vendor/autoload.php");
 
-echo Builder::Mutation("update", ["user" => 1]);
+echo Builder::Query([
+    "a" => [
+        "__args" => [
+            "b" => 1
+        ],
+        "test"
+    ],
+]);

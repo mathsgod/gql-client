@@ -53,7 +53,7 @@ class Builder
         return $this;
     }
 
-    public static function Mutation(string $name, array $args = [], $selector = [])
+    public static function Mutation(string $name, array $args = [], array $selector = [])
     {
         $builder = new self("mutation");
 
@@ -64,7 +64,7 @@ class Builder
         return $builder;
     }
 
-    public static function Subscription(string $name, array $args = [], $selector = [])
+    public static function Subscription(string $name, array $args = [], array $selector = [])
     {
         $builder = new self("subscription");
 

@@ -11,6 +11,19 @@ final class BuilderTest extends TestCase
 
     public function test_query()
     {
-        echo Builder::Query([Builder::_("me")]);
+        $mutation = (string)Builder::Mutation("update", ["user" => 1]);
+
+
+        $query = (string)Builder::Query([
+            "a" => [
+                "__args" => [
+                    "b" => 1
+                ],
+                "test"
+            ],
+        ]);
+
+        $this->assertEquals("mutation { update (user: 1) }", $mutation);
+        $this->assertEquals("query { a (b: 1) { test } }", $query);
     }
 }

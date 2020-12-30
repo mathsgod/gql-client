@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ClientTest extends TestCase
 {
+
     public function test_objToQuery()
     {
         $client = new GQL\Client("endpoint", ["pretty" => false]);
