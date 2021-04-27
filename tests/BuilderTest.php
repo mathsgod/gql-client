@@ -26,4 +26,20 @@ final class BuilderTest extends TestCase
         $this->assertEquals("mutation { update (user: 1) }", $mutation);
         $this->assertEquals("query { a (b: 1) { test } }", $query);
     }
+
+    
+    public function test_emoji()
+    {
+
+        $query = (string)Builder::Query([
+            "a" => [
+                "__args" => [
+                    "b" => "🙏🏼"
+                ],
+                "test"
+            ],
+        ]);
+
+        $this->assertEquals("query { a (b: \"🙏🏼\") { test } }", $query);
+    }
 }
