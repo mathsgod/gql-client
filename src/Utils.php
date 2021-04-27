@@ -37,7 +37,7 @@ class Utils
     {
         return str_repeat(" ", $level * 4 + 1);
     }
-    
+
     private function filterNonConfigFields(string $fieldName)
     {
         return !in_array($fieldName, self::CONFIG_FIELDS);
@@ -99,7 +99,7 @@ class Utils
     {
         if (!is_array($obj_from_json)) {
             if (!is_object($obj_from_json) || $obj_from_json === null) {
-                return json_encode($obj_from_json);
+                return json_encode($obj_from_json, JSON_UNESCAPED_UNICODE);
             }
         }
         $keys = array_keys($obj_from_json);
