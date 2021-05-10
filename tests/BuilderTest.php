@@ -8,6 +8,18 @@ use PHPUnit\Framework\TestCase;
 
 final class BuilderTest extends TestCase
 {
+    public function test_query2()
+    {
+        $query = (string)Builder::Query([
+            "a" => [
+                "__args" => [
+                    "b" => 1
+                ],
+                "test" => true
+            ],
+        ]);
+        $this->assertEquals("query { a (b: 1) { test } }", $query);
+    }
 
     public function test_query()
     {
@@ -27,7 +39,7 @@ final class BuilderTest extends TestCase
         $this->assertEquals("query { a (b: 1) { test } }", $query);
     }
 
-    
+
     public function test_emoji()
     {
 

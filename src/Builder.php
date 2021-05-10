@@ -24,6 +24,11 @@ class Builder
                 continue;
             }
 
+            if (is_bool($field)) {
+                $selectors[] = new Builder($name);
+                continue;
+            }
+
             if (is_string($field)) {
                 $selectors[] = new Builder($field);
 
