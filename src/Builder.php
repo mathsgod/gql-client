@@ -37,7 +37,7 @@ class Builder
 
             $builder = new Builder($name);
 
-            $builder->selectors = self::_($field);
+            $builder->selectors = self::_($field ?? []);
             if ($field["__args"]) {
                 $builder->args = $field["__args"];
             }

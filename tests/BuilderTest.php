@@ -23,7 +23,11 @@ final class BuilderTest extends TestCase
 
     public function test_query()
     {
-        $mutation = (string)Builder::Mutation("update", ["user" => 1]);
+        $mutation = (string)Builder::Mutation("update", [
+            "__args" => [
+                "user" => 1
+            ]
+        ]);
 
 
         $query = (string)Builder::Query([
