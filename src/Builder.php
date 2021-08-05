@@ -59,25 +59,17 @@ class Builder
         return $this;
     }
 
-    public static function Mutation(string $name, array $args = [], array $selector = [])
+    public static function Mutation(string $name, array $selector = [])
     {
         $builder = new self("mutation");
-
-        $b = new Builder($name, $args);
-        $b->selectors = self::_($selector);
-        $builder->selectors[] = $b;
-
+        $builder->selectors = self::_([$name => $selector]);
         return $builder;
     }
 
-    public static function Subscription(string $name, array $args = [], array $selector = [])
+    public static function Subscription(string $name,  array $selector = [])
     {
-        $builder = new self("subscription");
-
-        $b = new Builder($name, $args);
-        $b->selectors = self::_($selector);
-        $builder->selectors[] = $b;
-
+        $builder = new self("mutation");
+        $builder->selectors = self::_([$name => $selector]);
         return $builder;
     }
 

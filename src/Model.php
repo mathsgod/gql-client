@@ -97,7 +97,7 @@ class Model
             throw new Exception("key is not defined");
         }
 
-        $resp = self::$client->mutation2(
+        $resp = self::$client->mutation(
             static::class,
             [
                 "__args" => [
@@ -135,7 +135,7 @@ class Model
             }
 
 
-            self::$client->mutation2(
+            self::$client->mutation(
                 static::class,
                 [
                     "__args" => [
@@ -164,7 +164,7 @@ class Model
             }
 
 
-            $resp = self::$client->subscription2(
+            $resp = self::$client->subscription(
                 static::class,
                 [
                     "insert" => [
