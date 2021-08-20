@@ -15,7 +15,7 @@ final class BuilderTest extends TestCase
                 "__args" => [
                     "b" => 1
                 ],
-                "test" => true
+                "test"
             ],
         ]);
         $this->assertEquals("query { a (b: 1) { test } }", $query);

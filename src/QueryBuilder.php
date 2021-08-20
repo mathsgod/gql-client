@@ -2,15 +2,12 @@
 
 namespace GQL;
 
-use PHP\Util\QueryInterface;
 use IteratorAggregate;
 use Countable;
 use ArrayObject;
 
-class QueryBuilder implements QueryInterface, IteratorAggregate, Countable
+class QueryBuilder implements IteratorAggregate, Countable
 {
-
-
     public function select(array $select)
     {
         $this->select = $select;
@@ -42,9 +39,9 @@ class QueryBuilder implements QueryInterface, IteratorAggregate, Countable
         return $this;
     }
 
-    public function orderBy($order)
+    public function order($order)
     {
-        $this->orderBy = $order;
+        $this->order = $order;
         return $this;
     }
 

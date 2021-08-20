@@ -28,14 +28,19 @@ class Client
         return $this->request(Builder::Query($query));
     }
 
-    public function subscription(string $name,  array $subscription = [], array $multipart = [])
+
+    public function subscription(string $name, array $subscription, array $multipart = [])
     {
-        return $this->request(Builder::Subscription($name, $subscription), $multipart);
+        $builder = new Builder("subscription");
+        $builder->selectors = Builder::_([$name => $subscription]);
+        return $this->request($builder, $multipart);
     }
 
-    public function mutation(string $name, array $mutation = [], array $multipart = [])
+    public function mutation(string $name, array $mutation, array $multipart = [])
     {
-        return $this->request(Builder::Mutation($name, $mutation), $multipart);
+        $builder = new Builder("mutation");
+        $builder->selectors = Builder::_([$name => $mutation]);
+        return $this->request($builder, $multipart);
     }
 
     public function request(string $query, array $multipart = []): array
